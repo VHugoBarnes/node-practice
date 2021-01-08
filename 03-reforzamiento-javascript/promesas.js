@@ -17,50 +17,47 @@ let salarios = [{
     salario: 2000
 }];
 
-let getEmpleado = ( id ) => {
+let getEmpleado = (id) => {
 
     return new Promise((resolve, reject) => {
 
-        let empleadoDB = empleados.find( empleado => empleado.id === id);
-    
-        if ( !empleadoDB ) {
-            reject(`No existe un usuario con el id: ${id}`);
+        let empleadoDB = empleados.find(empleado => empleado.id === id)
+
+        if (!empleadoDB) {
+            reject(`No existe un empleado con el ID ${ id }`)
         } else {
             resolve(empleadoDB);
         }
-
     });
-
 }
 
-let getSalario = ( empleado ) => {
+let getSalario = (empleado) => {
 
-    return new Promise(( resolve, reject ) => {
-        let salarioDB = salarios.find( salario => salario.id === empleado );
-        let empleadoDB = empleados.find( empleadoo => empleadoo.id === empleado);
+    return new Promise((resolve, reject) => {
 
-        let datos = {
-            nombre: empleadoDB,
-            salario: salarioDB
-        }
+        let salarioDB = salarios.find(salario => salario.id === empleado.id);
 
-        if ( !salarioDB || !empleadoDB ) {
-            reject(`No existe un salario o un empleado con el id: ${empleado}`);
+        if (!salarioDB) {
+            reject(`No se encontró un salario para el usuario ${ empleado.nombre }`);
         } else {
-            resolve(datos)
+            resolve({
+                nombre: empleado.nombre,
+                salario: salarioDB.salario,
+                id: empleado.id
+            });
         }
-    });
 
+    });
 }
 
-getEmpleado(1).then( empleado => {
-    console.log('Empleado de base de datos ', empleado);
-}).catch( err => {
-    console.log(err);
-});
+getEmpleado(1).then(empleado => {
 
-getSalario(2).then( empleado => {
-    console.log('Salario de base de datos', empleado);
-}).catch( err => {
+    return getSalario(empleado);
+
+})
+.then(resp => {
+    console.log(`El salario de ${ resp.nombre } es de ${ resp.salario }`);
+})
+.catch(err => {
     console.log(err);
 });
