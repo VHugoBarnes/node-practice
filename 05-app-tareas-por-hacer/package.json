@@ -1,0 +1,15 @@
+{
+  "name": "05-app-tareas-por-hacer",
+  "version": "1.0.0",
+  "description": "Aplicación de tareas por hacer por medio de una CLI",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Víctor Hugo Vázquez Gómez",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "yargs": "^16.2.0"
+  }
+}
