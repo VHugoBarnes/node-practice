@@ -40,7 +40,29 @@ const listar = (  ) => {
     return listadoPorHacer;
 }
 
+const actualizar = ( descripcion, completado = true ) => {
+
+    if (completado === 'true') {
+        completado = true
+    } else {
+        completado = false
+    }
+
+    cargarDB();
+    let index = listadoPorHacer.findIndex( tarea => tarea.descripcion === descripcion )
+
+    if( index >= 0 ) {
+        listadoPorHacer[index].completado = completado;
+        guardarDB();
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
 module.exports = {
     crear,
-    listar
+    listar,
+    actualizar
 }
