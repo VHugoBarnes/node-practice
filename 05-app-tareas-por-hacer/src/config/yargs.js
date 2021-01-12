@@ -22,6 +22,7 @@ const actualizar_subcommands = {
 const argv = require('yargs')
     .command('crear', 'Crea un elemento por hacer', crear_subcommands)
     .command('actualizar', 'Actualiza el estado completado de una tarea', actualizar_subcommands)
+    .command('listar', 'Lista las tareas')
     .help().argv;
 
 module.exports = {

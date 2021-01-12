@@ -35,6 +35,12 @@ const crear = ( descripcion ) => {
 
 }
 
+const listar = (  ) => {
+    cargarDB();
+    return listadoPorHacer;
+}
+
 module.exports = {
-    crear
+    crear,
+    listar
 }
