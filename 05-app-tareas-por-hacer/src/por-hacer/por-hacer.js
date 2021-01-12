@@ -1,16 +1,21 @@
 const fs = require('fs');
 const { colors } = require('colors');
 
+// Por defecto inicializamos el listadoporhacer vacío
 let listadoPorHacer = [];
 
+// Guarda en el archivo JSON el arreglo
 const guardarDB = () => {
     let data = JSON.stringify(listadoPorHacer);
     fs.writeFile('db/data.json', data, (err) => {
-        if (err) throw new Error('No se pudo grabar')
+        if (err) throw new Error('No se pudo grabar');
     });
 }
 
+// Carga el contenido de la base de datos
 const cargarDB = () => {
+    // try-catch porque puede que el archivo data.json
+    // no contenga nada en él.
     try {
         listadoPorHacer = require('../db/data.json');
     } catch ( error ) {
@@ -18,6 +23,8 @@ const cargarDB = () => {
     }
 }
 
+// Acción crear
+// Hace push al arreglo con la nueva tarea por hacer.
 const crear = ( descripcion ) => {
 
     cargarDB();
@@ -35,13 +42,19 @@ const crear = ( descripcion ) => {
 
 }
 
+// Carga los datos del JSON
+// Y retorna el listado
 const listar = (  ) => {
     cargarDB();
     return listadoPorHacer;
 }
 
+// Marcar como hecho o no hecho, dependiendo de que se pase por parámetro
 const actualizar = ( descripcion, completado = true ) => {
 
+    // Ocurre un bug, cuando se pasa false en el comando,
+    // se pasa como un string, así que lo que hace esta condición
+    // es convertirlo a booleano
     if (completado === 'true') {
         completado = true
     } else {
@@ -49,8 +62,10 @@ const actualizar = ( descripcion, completado = true ) => {
     }
 
     cargarDB();
+    // Nos busca el índice de la tarea con la descripción pasada por parámetro
     let index = listadoPorHacer.findIndex( tarea => tarea.descripcion === descripcion )
 
+    // Si el índice es negativo, quiere decir que no encontró nada
     if( index >= 0 ) {
         listadoPorHacer[index].completado = completado;
         guardarDB();
@@ -61,6 +76,8 @@ const actualizar = ( descripcion, completado = true ) => {
 
 }
 
+// Acción para borrar la tarea que coincida con la descripción pasada
+// por parámetro
 const borrar = ( descripcion ) => {
     
     cargarDB();
@@ -86,8 +103,6 @@ const borrar = ( descripcion ) => {
     } else {
         return false;
     }
-
-
 
 }
 

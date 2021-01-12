@@ -2,8 +2,10 @@ const { argv } = require('./config/yargs');
 const { crear, listar, actualizar, borrar } = require('./por-hacer/por-hacer');
 const { colors } = require('colors');
 
+// Obtiene los comandos de la primera posición
 let comando = argv._[0];
 
+// Estructura para controlar el flujo de comandos que se ingresan
 switch (comando) {
     case 'crear':
         let tarea = crear( argv.descripcion );

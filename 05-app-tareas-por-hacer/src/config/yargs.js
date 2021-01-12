@@ -19,7 +19,7 @@ const actualizar_subcommands = {
     }
 }
 
-borrar_subcommands = {
+const borrar_subcommands = {
     descripcion: {
         demand: true,
         alias: 'd',
