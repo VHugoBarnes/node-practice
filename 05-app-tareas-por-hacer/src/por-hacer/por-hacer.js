@@ -61,8 +61,39 @@ const actualizar = ( descripcion, completado = true ) => {
 
 }
 
+const borrar = ( descripcion ) => {
+    
+    cargarDB();
+
+    let longitudDB = listadoPorHacer.length;
+
+    // Filtrar todos las tareas excepto el pasado por la descripción
+    let filtro = listadoPorHacer.filter( tarea => tarea.descripcion !== descripcion );
+    // Este filter debería devolver todas las tareas que no coincidan con el 
+    // pasado por parámetro
+    
+    let longitudFiltrado = filtro.length;
+
+    // Comprobar si la longitud de los dos arreglos es diferente
+    // Esto para comprobar si en realidad se encontró una tarea con esa descripción
+    if ( longitudDB !== longitudFiltrado ) { // Si se encontró la tarea
+        // Guardar en la base de datos
+        datos = JSON.stringify(filtro);
+        fs.writeFile('db/data.json', datos, (err) => {
+            if (err) throw new Error('No se pudo grabar')
+        });
+        return true;
+    } else {
+        return false;
+    }
+
+
+
+}
+
 module.exports = {
     crear,
     listar,
-    actualizar
+    actualizar,
+    borrar
 }

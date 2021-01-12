@@ -1,5 +1,5 @@
 const { argv } = require('./config/yargs');
-const { crear, listar, actualizar } = require('./por-hacer/por-hacer');
+const { crear, listar, actualizar, borrar } = require('./por-hacer/por-hacer');
 const { colors } = require('colors');
 
 let comando = argv._[0];
@@ -25,6 +25,10 @@ switch (comando) {
         } else {
             console.log('No se encontró una tarea con esa descripción');
         }
+        break;
+    case 'borrar':
+        let borrado = borrar(argv.descripcion);
+        console.log(`${borrado ? 'Tarea eliminada exitosamente'.green : 'No se encontró la tarea con esa descripción'.red}`);
         break;
     default:
         console.log('Comando invalido');
