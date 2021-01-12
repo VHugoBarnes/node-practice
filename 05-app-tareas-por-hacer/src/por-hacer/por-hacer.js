@@ -44,9 +44,26 @@ const crear = ( descripcion ) => {
 
 // Carga los datos del JSON
 // Y retorna el listado
-const listar = (  ) => {
+const listar = ( completado ) => {
+    
     cargarDB();
-    return listadoPorHacer;
+
+    // Ocurre un bug, cuando se pasa false en el comando,
+    // se pasa como un string, así que lo que hace esta condición
+    // es convertirlo a booleano
+    if (completado === 'true') {
+        completado = true
+    } else if ( completado === 'false' ){
+        completado = false
+    }
+
+    // Listar por el filtro dado en el parámetro de la función
+    if( completado === undefined ) { // Si completado es undefined
+        return listadoPorHacer;
+    } else if ( completado || !completado ) { // Si completado es true O false
+        return listadoPorHacer.filter( tarea => tarea.completado === completado )
+    }
+    
 }
 
 // Marcar como hecho o no hecho, dependiendo de que se pase por parámetro

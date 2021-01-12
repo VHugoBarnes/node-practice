@@ -12,7 +12,7 @@ switch (comando) {
         console.log( tarea );
         break;
     case 'listar':
-        let listado = listar();
+        let listado = listar(argv.completado);
         console.log('=============Por Hacer=============\n'.green);
         for (const item of listado) {
             console.log('Descripción: '.magenta + `${item.descripcion}`.yellow);
