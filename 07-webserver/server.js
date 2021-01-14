@@ -1,18 +1,20 @@
 const express = require('express');
 const app = express();
+
+app.use( express.static(__dirname + '/public') )
  
-app.get('/', (req, res) => {
+// app.get('/', (req, res) => {
 
-    //   res.send('Hello World');
-    let salida = {
-        nombre: 'Víctor',
-        edad: 21,
-        url: req.url
-    }
+//     //   res.send('Hello World');
+//     let salida = {
+//         nombre: 'Víctor',
+//         edad: 21,
+//         url: req.url
+//     }
 
-    res.send(salida);
+//     res.send(salida);
 
-});
+// });
 
 app.listen(3000, () => {
     console.log('Escuchando peticiones en el puerto 3000');
