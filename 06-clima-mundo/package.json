@@ -2,7 +2,7 @@
   "name": "06-clima-mundo",
   "version": "1.0.0",
   "description": "Obtener el clima de cualquier parte del mundo",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
