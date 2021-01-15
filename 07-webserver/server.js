@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const hbs = require('hbs');
+require('./hbs/helpers')
 
 app.use( express.static(__dirname + '/public') );
 
