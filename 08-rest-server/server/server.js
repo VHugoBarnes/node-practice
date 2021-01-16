@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+require('./config/config');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -46,6 +47,6 @@ app.delete('/usuario', function (req, res) {
     res.json('delete Usuario');
 });
  
-app.listen(3000, () => {
-    console.log('Escuchando el puerto: ', 3000);
+app.listen(process.env.PORT, () => {
+    console.log('Escuchando el puerto: ', process.env.PORT);
 });
