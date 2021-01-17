@@ -17,10 +17,10 @@ let usuarioSchema = new Schema({
         required: [true, 'La contraseña es necesaria']
     },
     img: { // No es obligatoria
-        type: String,
-        required: [true, 'La imagen es necesaria']
+        type: String
     },
     role: { // Default 'USER_ROLE'
+        type: String,
         default: 'USER_ROLE'
     },
     estado: { // Boolean
