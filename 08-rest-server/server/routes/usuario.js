@@ -9,6 +9,12 @@ const app = express();
 
 // Servicio rest
 app.get('/usuario', verificaToken, (req, res) => {
+
+    // return res.json({
+    //     usuario: req.usuario,
+    //     nombre: req.usuario.nombre,
+    //     email: req.usuario.email
+    // });
     
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -70,7 +76,7 @@ app.post('/usuario', (req, res) => {
 });
  
 // Servicio put
-app.put('/usuario/:id', async(req, res) => {
+app.put('/usuario/:id', verificaToken, async(req, res) => {
     
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -93,7 +99,7 @@ app.put('/usuario/:id', async(req, res) => {
 });
  
 // Servicio delete
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', verificaToken, (req, res) => {
     
     let id = req.params.id;
 
