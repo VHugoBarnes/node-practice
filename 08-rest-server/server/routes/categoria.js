@@ -24,7 +24,9 @@ app.get('/categoria', [verificaToken], (req, res) => {
     // ser pocos en nuestro modelo de negocio
 
     // Obtenemos con el metodo find
-    Categoria.find({}, 'categoria usuario')
+    Categoria.find({})
+        .sort('descripcion')
+        .populate('usuario', 'nombre email')
         .exec( (err, categorias) => {
 
             // En caso de que devuelva un error
@@ -36,13 +38,10 @@ app.get('/categoria', [verificaToken], (req, res) => {
             }
 
             // En caso de que todo sea correcto
-            Categoria.count({}, (err, conteo) => {
-                res.status(200).json({
-                    ok: true,
-                    count: conteo,
-                    categorias
-                });
-            })
+            res.status(200).json({
+                ok: true,
+                categorias
+            });
 
         });
 
@@ -112,7 +111,7 @@ app.post('/categoria', [verificaToken], (req, res) => {
         }
 
         // En caso de que el proceso de almacenado sea exitoso
-        res.status(200).json({
+        res.status(201).json({
             ok: true,
             categoria: categoriaDB
         });
@@ -176,7 +175,7 @@ app.delete('/categoria/:id', [verificaToken, verificarAdminRole], (req, res) => 
 
         // En caso de que devuelva un error
         if(err) {
-            return res.status(400).json({
+            return res.status(403).json({
                 ok: false,
                 err
             });
