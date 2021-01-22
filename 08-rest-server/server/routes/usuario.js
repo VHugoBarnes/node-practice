@@ -117,7 +117,7 @@ app.delete('/usuario/:id', [verificaToken, verificarAdminRole], (req, res) => {
         }
 
         if(!usuarioBorrado) {
-            return res.status(400).json({
+            return res.status(204).json({
                 ok: false,
                 err: {
                     message: 'User not found'

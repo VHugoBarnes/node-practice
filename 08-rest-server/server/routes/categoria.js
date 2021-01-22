@@ -63,7 +63,7 @@ app.get('/categoria/:id', [verificaToken], (req, res) => {
 
         // En caso de que devuelva un error
         if(err) {
-            return res.status(400).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
@@ -89,7 +89,7 @@ app.post('/categoria', [verificaToken, verificarAdminRole], (req, res) => {
     
     // Regresa la nueva categoría
 
-    // Obtenemos el cuerpo del token que nos devuelve el middleware
+    // Obtenemos el cuerpo de la petición
     let body = req.body;
 
     // Preparamos el documento que se guardará en la base de datos
@@ -150,7 +150,7 @@ app.put('/categoria/:id', [verificaToken, verificarAdminRole], (req, res) => {
                 });
             }
 
-            res.status(200).json({
+            res.status(202).json({
                 ok: true,
                 categoria: categoriaDB
             });
