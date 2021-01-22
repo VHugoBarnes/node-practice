@@ -5,3 +5,5 @@
 06-clima-mundo/secrets.js
 07-webserver/node_modules
 08-rest-server/node_modules
+08-rest-server/tmp
+08-rest-server/uploads
