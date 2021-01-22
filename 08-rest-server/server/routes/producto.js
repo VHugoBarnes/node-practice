@@ -76,6 +76,37 @@ app.get('/productos/:id', [verificaToken], (req, res) => {
 });
 
 /** ====================================================
+ *      Servicio encargado de buscar un producto
+ *          - Requiere Token
+ *  ====================================================*/
+app.get('/productos/buscar/:termino', [verificaToken], (req, res) => {
+
+    let termino = req.params.termino;
+
+    let regex = new RegExp(termino, 'i');
+
+    Producto.find({ nombre: regex })
+        .populate('categoria', 'nombre')
+        .exec((err, productos) => {
+
+            // En caso de que devuelva un error
+            if( err ) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.status(202).json({
+                ok: true,
+                productos
+            });
+
+        });
+
+});
+
+/** ====================================================
  *      Servicio encargado de crear un producto
  *          - Requiere Token
  *  ====================================================*/
