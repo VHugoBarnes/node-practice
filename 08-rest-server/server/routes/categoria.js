@@ -83,7 +83,7 @@ app.get('/categoria/:id', [verificaToken], (req, res) => {
  *     Servicio encargado de crear nueva categoría
 *          - Requiere Token
  *  ====================================================*/
-app.post('/categoria', [verificaToken], (req, res) => {
+app.post('/categoria', [verificaToken, verificarAdminRole], (req, res) => {
 
     // ToDo: Verificar duplicidad en las categorias antes de guardarlas
     
@@ -124,7 +124,7 @@ app.post('/categoria', [verificaToken], (req, res) => {
  *      Servicio encargado de actualizar categoría
 *          - Requiere Token
  *  ====================================================*/
-app.put('/categoria/:id', [verificaToken], (req, res) => {
+app.put('/categoria/:id', [verificaToken, verificarAdminRole], (req, res) => {
     
     // Regresa la categoría ya actualizada
 
