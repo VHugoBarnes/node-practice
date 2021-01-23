@@ -11,37 +11,8 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(publicPath));
 // IO: esta es la comunicación del backend
-let io = sockerIO(server);
-
-io.on('connection', (client) => {
-
-    console.log('Usuario conectado');
-
-    client.emit('enviarMensaje', {
-        usuario: 'Administrador',
-        mensaje: 'Bienvenido'
-    });
-
-    client.on('disconnect', () => {
-        console.log('Usuario desconectado');
-    });
-
-    // Escuchar al cliente
-    client.on('enviarMensaje', (mensaje, callback) => {
-        // console.log(mensaje);
-
-        if(mensaje.nombre) {
-            callback({
-                res: 'Todo salió bien'
-            });
-        } else {
-            callback({
-                res: 'Todo salió bien'
-            });
-        }
-    });
-
-});
+module.exports.io = sockerIO(server);
+require('./sockets/socket');
 
 server.listen(port, (err) => {
 
