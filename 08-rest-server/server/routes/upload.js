@@ -4,16 +4,13 @@ const fileUpload = require('express-fileupload');
 const fs = require('fs');
 
 const Usuario = require('../models/usuario');
+const Producto = require('../models/producto');
 const app = express();
 
 // Default options
 app.use(fileUpload());
 
 app.put('/upload/:tipo/:id', (req, res) => {
-
-    // Recolectar datos de los params
-    let tipo = req.params.tipo;
-    let id = req.params.id;
 
     // Si no se mandó ningún archivo
     if(!req.files) {
@@ -24,6 +21,10 @@ app.put('/upload/:tipo/:id', (req, res) => {
             }
         });
     }
+
+    // Recolectar datos de los params
+    let tipo = req.params.tipo;
+    let id = req.params.id;
 
     // Validar tipo
     let tiposValidos = ['productos', 'usuarios'];
@@ -37,15 +38,13 @@ app.put('/upload/:tipo/:id', (req, res) => {
         });
     }
 
-    // Obtener el archivo de la request
-    let archivo = req.files.archivo;
-
     // Restringir la extensión del archivo a subir
     let extensionesValidas = ['png', 'gif', 'jpg', 'jpeg'];
+    // Obtener el archivo de la request
+    let archivo = req.files.archivo;
     // Obtener la extensión del archivo
     let nombreSeparado = archivo.name.split('.');
     let extensionArchivo = nombreSeparado[nombreSeparado.length - 1]; // Obtener lo que viene después del punto
-
     // Validar si la extensión es valida
     if(extensionesValidas.indexOf(extensionArchivo) < 0) {
         return res.status(406).json({
@@ -74,7 +73,12 @@ app.put('/upload/:tipo/:id', (req, res) => {
         }
 
         // En este punto la imagen ya está cargada
-        imagenUsuario(id, res, nombreArchivo);
+        // Mandar a guardar a un path dependiendo el tipo
+        if(tipo === 'usuarios') {
+            imagenUsuario(id, res, nombreArchivo);
+        } else if(tipo === 'productos') {
+            imagenProducto(id, res, nombreArchivo);
+        }
 
     });
 
@@ -83,7 +87,8 @@ app.put('/upload/:tipo/:id', (req, res) => {
 function imagenUsuario(id, res, nombreArchivo) {
 
     Usuario.findById(id, (err, usuarioBD) => {
-
+        
+        // Si ocurrió un error, de todas maneras borrarlo
         if(err) {
             borraArchivo(nombreArchivo, 'usuarios');
             return res.status(500).json({
@@ -92,7 +97,9 @@ function imagenUsuario(id, res, nombreArchivo) {
             });
         }
 
+        // Si no existe el usuario, borrarlo
         if(!usuarioBD) {
+            borraArchivo(nombreArchivo, 'usuarios');
             return res.status(404).json({
                 ok: false,
                 err: {
@@ -101,6 +108,8 @@ function imagenUsuario(id, res, nombreArchivo) {
             });
         }
 
+        // Llamamos a la función de borrar archivo para
+        // que borre el registro anterior
         borraArchivo(usuarioBD.img, 'usuarios');
 
         usuarioBD.img = nombreArchivo;
@@ -116,7 +125,47 @@ function imagenUsuario(id, res, nombreArchivo) {
 
 }
 
-function imagenProducto(){
+function imagenProducto(id, res, nombreArchivo){
+
+    Producto.findById(id, (err, productoDB) => {
+
+        // Si ocurrió un error, de todas maneras borrarlo
+        if(err) {
+            borraArchivo(nombreArchivo, 'productos');
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
+
+        // Si no existe el usuario, borrarlo
+        if(!productoDB) {
+            borraArchivo(nombreArchivo, 'productos');
+            return res.status(404).json({
+                ok: false,
+                err: {
+                    message: 'Producto no existe'
+                }
+            });
+        }
+
+        // Llamamos a la función de borrar archivo para
+        // que borre el registro anterior
+        borraArchivo(productoDB.img, 'productos');
+
+        // Asignamos el nuevo nombre
+        productoDB.img = nombreArchivo;
+
+        // Guardar en la base de datos
+        productoDB.save((err, productoGuardado) => {
+            res.status(202).json({
+                ok: true,
+                productoGuardado,
+                img: nombreArchivo
+            });
+        });
+
+    });
 
 }
 
