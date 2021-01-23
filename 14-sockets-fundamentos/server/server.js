@@ -13,6 +13,11 @@ app.use(express.static(publicPath));
 // IO: esta es la comunicación del backend
 let io = sockerIO(server);
 
+io.on('connection', (client) => {
+
+    console.log('Usuario conectado');
+
+});
 
 server.listen(port, (err) => {
 
