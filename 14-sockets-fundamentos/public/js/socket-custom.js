@@ -20,5 +20,5 @@ var socket = io();
 
         // Escuchar información
         socket.on('enviarMensaje', function(data){
-            console.log('Servidor dice: ', data);
+            console.log(data);
         });
