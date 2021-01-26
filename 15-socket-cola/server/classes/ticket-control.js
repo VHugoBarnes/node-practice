@@ -76,7 +76,7 @@ class TicketControl {
             this.ultimosCuatro.splice(-1, 1); // Borra el último (-1) elemento
         }
 
-        console.log('Ultimos 4', this.ultimosCuatro);
+        // console.log('Ultimos 4', this.ultimosCuatro);
 
         this.grabarArchivo();
 

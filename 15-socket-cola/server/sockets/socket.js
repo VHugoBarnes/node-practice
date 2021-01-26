@@ -10,7 +10,7 @@ io.on('connection', (client) => {
     client.on('siguienteTicket', (data, callback) => {
 
         let siguiente = ticketControl.siguienteTicket();
-        console.log(siguiente);
+        //console.log(siguiente);
         callback(siguiente);
 
     });
@@ -31,7 +31,9 @@ io.on('connection', (client) => {
         callback(atenderTicket);
 
         // actualizar/notificar cambios en los ultimosCuatro
-        
+        client.broadcast.emit('ultimosCuatro', {
+            ultimosCuatro: ticketControl.getUltimosCuatro()
+        });
 
     });
 
