@@ -47,6 +47,10 @@ class TicketControl {
         return `Ticket ${this.ultimo}`;
     }
 
+    getUltimosCuatro() {
+        return this.ultimosCuatro;
+    }
+
     atenderTicket(escritorio) {
 
         // Si no hay tickets por atender
