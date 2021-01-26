@@ -27,6 +27,8 @@ socket.on('disconnect', function() {
 
 });
 
+// socket.emit('crearMensaje', {});
+
 socket.on('crearMensaje', function(mensaje) {
 
     console.log('Servidor:', mensaje);
