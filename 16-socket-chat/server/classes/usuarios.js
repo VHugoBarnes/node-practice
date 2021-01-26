@@ -15,9 +15,9 @@ class Usuarios {
         this.personas = [];
     }
 
-    agregarPersona(id, nombre) {
+    agregarPersona(id, nombre, sala) {
         // Creamos a la persona conforme a lo pasado por parámetro
-        let persona = { id, nombre };
+        let persona = { id, nombre, sala };
         // Agregamos a la persona en la lista de personas
         this.personas.push(persona);
 
