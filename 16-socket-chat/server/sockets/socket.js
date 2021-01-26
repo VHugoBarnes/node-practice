@@ -6,6 +6,7 @@ const usuarios = new Usuarios();
 
 io.on('connection', (client) => {
 
+    // Entrar al chat general
     client.on('entrarChat', (data, callback) => {
         
         if( !data.nombre ) {
@@ -23,6 +24,7 @@ io.on('connection', (client) => {
 
     });
 
+    // Mensaje global
     client.on('enviarMensaje', (data, callback) => {
 
         let persona = usuarios.obtenerPersona(client.id);
@@ -32,6 +34,7 @@ io.on('connection', (client) => {
 
     });
 
+    // Desconectar de la página
     client.on('disconnect', () => {
 
         let personaBorrada = usuarios.borrarPersona(client.id);
@@ -39,6 +42,15 @@ io.on('connection', (client) => {
         client.broadcast.emit('crearMensaje', 
             crearMensaje('Administrador', `${personaBorrada.nombre} salió`));
         client.broadcast.emit('listaPersonas', usuarios.obtenerPersonas());
+
+    });
+
+    // Mensajes privados
+    client.on('mensajePrivado', data => {
+
+        let persona = usuarios.obtenerPersona(client.id);
+
+        client.broadcast.to(data.para).emit('mensajePrivado', crearMensaje(persona.nombre, data.mensaje));
 
     });
 
