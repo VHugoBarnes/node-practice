@@ -43,12 +43,13 @@ socket.on('disconnect', function() {
 // Escuchar información
 socket.on('crearMensaje', function(mensaje) {
     // console.log('Servidor:', mensaje);
-    renderizarMensajes(mensaje);
+    renderizarMensajes(mensaje, false);
+    scrollBottom();
 });
 
 // Escuchar cambios de usuarios
 // cuando un usuario entra o sale del chat
-socket.on('listaPersonas', function(personas) {
+socket.on('listaPersona', function(personas) {
     renderizarUsuarios(personas);
 });
 
