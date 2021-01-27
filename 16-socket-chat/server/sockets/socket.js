@@ -28,12 +28,14 @@ io.on('connection', (client) => {
     });
 
     // Mensaje global
-    client.on('enviarMensaje', (data, callback) => {
+    client.on('crearMensaje', (data, callback) => {
 
         let persona = usuarios.obtenerPersona(client.id);
 
         let mensaje = crearMensaje( persona.nombre, data.mensaje );
-        client.broadcast.to(persona.sala).emit('crearMensaje', mensaje)
+        client.broadcast.to(persona.sala).emit('crearMensaje', mensaje);
+
+        callback(mensaje);
 
     });
 
