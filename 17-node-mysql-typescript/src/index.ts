@@ -5,7 +5,8 @@ import MySQL from './mysql/mysql';
 const server = Server.init(3000);
 server.app.use(router);
 
-const mysql = new MySQL();
+// Llamar a la instancia de mysql
+// MySQL.instance;
 
 server.start(() => {
     

@@ -19,6 +19,12 @@ export default class MySQL {
         this.conectarDB();
     }
 
+    public static get instance() {
+        // this._instance = new this() llama al constructor para crear una
+        // nueva instancia
+        return this._instance || (this._instance = new this());
+    }
+
     private conectarDB() {
 
         this.cnn.connect((err: mysql.MysqlError) => {
