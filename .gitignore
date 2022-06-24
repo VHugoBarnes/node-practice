@@ -1,4 +1,5 @@
-
+*/node_modules
+*.out
 04-bases-node/node_modules
 05-app-tareas-por-hacer/node_modules
 06-clima-mundo/node_modules
